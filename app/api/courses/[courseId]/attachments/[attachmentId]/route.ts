@@ -12,14 +12,14 @@ export async function DELETE(req: Request, { params }: ParamsProps) {
     const { userId } = auth();
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 
-    const courseOwner = await db.course.findUnique({
+    const isCourseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
         userId: userId,
       },
     });
 
-    if (!courseOwner) {
+    if (!isCourseOwner) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -32,7 +32,7 @@ export async function DELETE(req: Request, { params }: ParamsProps) {
 
     return NextResponse.json(attachment);
   } catch (error) {
-    console.error("ATTACHMENT_ID", error);
+    console.error("[ATTACHMENT_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

@@ -4,17 +4,16 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 type ParamsProps = {
-  params: { courseId: string };
+  params: {
+    courseId: string;
+  };
 };
 
 export async function POST(req: Request, { params }: ParamsProps) {
   try {
     const { userId } = auth();
-    const { url } = await req.json();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
+    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 
     const isCourseOwner = await db.course.findUnique({
       where: {
@@ -23,21 +22,32 @@ export async function POST(req: Request, { params }: ParamsProps) {
       },
     });
 
-    if (!isCourseOwner) {
+    if (!isCourseOwner)
       return new NextResponse("Unauthorized", { status: 401 });
-    }
 
-    const attachment = await db.attachment.create({
-      data: {
-        url,
-        name: url.split("/").pop(),
+    const { title } = await req.json();
+
+    const lastChapter = await db.chapter.findFirst({
+      where: {
         courseId: params.courseId,
+      },
+      orderBy: {
+        position: "desc",
       },
     });
 
-    return NextResponse.json(attachment);
+    const newPosition = (lastChapter?.position || 0) + 1;
+    const chapter = await db.chapter.create({
+      data: {
+        title,
+        courseId: params.courseId,
+        position: newPosition,
+      },
+    });
+
+    return NextResponse.json(chapter);
   } catch (error) {
-    console.error("[COURSE_ID_ATTACHMENTS]", error);
+    console.error("[CHAPTERS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
