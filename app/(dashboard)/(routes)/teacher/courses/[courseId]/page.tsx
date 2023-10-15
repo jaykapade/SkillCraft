@@ -8,6 +8,7 @@ import IconBadge from "@/components/IconBadge";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
+import CategoryForm from "./_components/CategoryForm";
 
 type CourseProps = {
   params: {
@@ -21,6 +22,11 @@ const CoursePage = async ({ params }: CourseProps) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+    },
+  });
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
     },
   });
   if (!course) redirect("/");
@@ -57,6 +63,14 @@ const CoursePage = async ({ params }: CourseProps) => {
           <TitleForm initialData={course} courseId={course.id} />
           <DescriptionForm initialData={course} courseId={course.id} />
           <ImageForm initialData={course} courseId={course.id} />
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          />
         </div>
       </div>
     </div>
