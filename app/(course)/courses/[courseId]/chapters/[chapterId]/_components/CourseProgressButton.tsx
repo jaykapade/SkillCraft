@@ -37,6 +37,7 @@ const CourseProgressButton = ({
         }
       );
 
+      // if course is completed
       if (!isCompleted && !nextChapterId) {
         confetti.onOpen();
       }
@@ -45,7 +46,9 @@ const CourseProgressButton = ({
         router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
       }
 
-      toast.success("Progress updated");
+      toast.success(
+        !isCompleted && !nextChapterId ? "Course Completed" : "Progress updated"
+      );
       router.refresh();
     } catch {
       toast.error("Something went wrong");
