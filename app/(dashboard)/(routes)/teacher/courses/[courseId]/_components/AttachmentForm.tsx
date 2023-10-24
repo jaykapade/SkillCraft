@@ -19,6 +19,7 @@ type AttachmentFormProps = {
 
 const formSchema = z.object({
   url: z.string().min(1),
+  name: z.string().min(1),
 });
 
 const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
@@ -101,9 +102,9 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
         <div>
           <FileUpload
             endpoint="courseAttachment"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ url });
+            onChange={(url, name) => {
+              if (url && name) {
+                onSubmit({ url, name });
               }
             }}
           />

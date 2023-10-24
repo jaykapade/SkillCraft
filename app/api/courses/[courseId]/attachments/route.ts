@@ -10,7 +10,7 @@ type ParamsProps = {
 export async function POST(req: Request, { params }: ParamsProps) {
   try {
     const { userId } = auth();
-    const { url } = await req.json();
+    const { url, name } = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -30,7 +30,7 @@ export async function POST(req: Request, { params }: ParamsProps) {
     const attachment = await db.attachment.create({
       data: {
         url,
-        name: url.split("/").pop(),
+        name: name || url.split("/").pop(),
         courseId: params.courseId,
       },
     });
