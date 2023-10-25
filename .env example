@@ -1,0 +1,29 @@
+# Replace the secrets with proper keys
+# Clerk env variables
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_********************************
+CLERK_SECRET_KEY=sk_********************************
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+# Neon DB URL
+DATABASE_URL=********************************
+
+# Uploadthing env variables
+UPLOADTHING_SECRET=sk_****************
+UPLOADTHING_APP_ID=***********
+
+# Mux env variables
+MUX_TOKEN_ID=********************************
+MUX_TOKEN_SECRET=****************
+
+# Stripe env variables
+STRIPE_API_KEY=sk_****************
+STRIPE_WEBHOOK_SECRET=********************************
+ # Stripe reroute url
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Teacher User ID
+NEXT_PUBLIC_TEACHER_ID=*******************
