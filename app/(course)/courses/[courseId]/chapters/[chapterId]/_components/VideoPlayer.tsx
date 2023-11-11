@@ -10,7 +10,7 @@ import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/useConfettiStore";
 
-type VideoPlayerProps = {
+interface VideoPlayerProps {
   playbackId: string;
   courseId: string;
   chapterId: string;
@@ -18,7 +18,7 @@ type VideoPlayerProps = {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-};
+}
 
 const VideoPlayer = ({
   playbackId,
@@ -47,7 +47,7 @@ const VideoPlayer = ({
           confetti.onOpen();
         }
 
-        toast.success(nextChapterId ? "Progress updated" : "Course completed");
+        toast.success("Progress updated");
         router.refresh();
 
         if (nextChapterId) {

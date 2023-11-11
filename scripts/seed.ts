@@ -12,6 +12,7 @@ async function main() {
         { name: "Accounting" },
         { name: "Engineering" },
         { name: "Filming" },
+        { name: "Art" },
       ],
     });
     console.log("Successfully Seeded the db");
